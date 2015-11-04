@@ -1,16 +1,18 @@
 package serveur;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.ArrayList;
 
-public class Serveur {
-	private ArrayList<Personne> listePersonnes;
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+public class Serveur extends ServerSocket {
 
+	private static ArrayList<Personne> listePersonnes;
+	
+	public Serveur(int port) throws IOException {
+		super(port);
+		// TODO Auto-generated constructor stub
 	}
+	
 	/**
 	 * @return the listePersonnes
 	 */
