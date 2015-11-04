@@ -5,21 +5,25 @@ import java.util.ArrayList;
 public class Personne {
 	private String nom;
 	private ArrayList<String> surnoms = new ArrayList<String>();;
-	
+
 	public Personne() {
 		this.setNom("");
 		this.setSurnoms(null);
 	}
-	
+
 	public Personne(String n, ArrayList<String> s) {
 		this.setNom(n);
 		this.setSurnoms(s);
 	}
 
+	/**
+	 * @param nouveauSurnom
+	 *            the surnom to add
+	 */
 	public void addSurnom(String nouveauSurnom) {
 		surnoms.add(nouveauSurnom);
 	}
-	
+
 	/**
 	 * @return the surnoms
 	 */
@@ -28,7 +32,8 @@ public class Personne {
 	}
 
 	/**
-	 * @param surnoms the surnoms to set
+	 * @param surnoms
+	 *            the surnoms to set
 	 */
 	public void setSurnoms(ArrayList<String> surnoms) {
 		this.surnoms = surnoms;
@@ -42,11 +47,11 @@ public class Personne {
 	}
 
 	/**
-	 * @param nom the nom to set
+	 * @param nom
+	 *            the nom to set
 	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
 
 }
