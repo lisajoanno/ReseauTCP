@@ -11,9 +11,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		System.out.println("TCP");
 		Serveur serveur = new Serveur(2222);
-		while(true) {
-			
-		}
+
 	}
 
 }
