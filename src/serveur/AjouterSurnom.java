@@ -1,13 +1,18 @@
 package serveur;
 
+import exception.SurnomDejaExistant;
 import java.util.*;
 
 public class AjouterSurnom implements Requete {
 	private String nomAajouter;
 
 	@Override
-	public void process(List<Personne> l1) {
-		// TODO Auto-generated method stub
-
+	public ArrayList<Personne> process(ArrayList<Personne> lp) throws SurnomDejaExistant {
+		for (Personne p : lp) {
+			if (p.getSurnoms().contains(nomAajouter)) {
+				throw new SurnomDejaExistant();
+			}
+		}
+		return lp;
 	}
 }

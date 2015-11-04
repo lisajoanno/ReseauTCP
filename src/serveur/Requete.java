@@ -2,6 +2,8 @@ package serveur;
 
 import java.util.*;
 
+import exception.SurnomDejaExistant;
+
 public interface Requete {
-	public void process(List<Personne> l1);
+	public ArrayList<Personne> process(ArrayList<Personne> l1) throws SurnomDejaExistant;
 }
