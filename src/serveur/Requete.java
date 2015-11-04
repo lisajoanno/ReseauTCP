@@ -1,5 +1,7 @@
 package serveur;
 
-public interface Requete {
+import java.util.*;
 
+public interface Requete {
+	public void process(List<Personne> l1);
 }
