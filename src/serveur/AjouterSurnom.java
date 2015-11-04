@@ -1,18 +1,24 @@
 package serveur;
 
 import exception.SurnomDejaExistant;
+import exception.NomNonAttribue;
 import java.util.*;
 
 public class AjouterSurnom implements Requete {
-	private String nomAajouter;
+	private String surnomAajouter;
+	private String nomDestination;
 
 	@Override
-	public ArrayList<Personne> process(ArrayList<Personne> lp) throws SurnomDejaExistant {
+	public ArrayList<Personne> process(ArrayList<Personne> lp) throws Exception {
 		for (Personne p : lp) {
-			if (p.getSurnoms().contains(nomAajouter)) {
+			if (p.getSurnoms().contains(surnomAajouter)) {
 				throw new SurnomDejaExistant();
 			}
+			if (nomDestination.equals(p.getNom())) {
+				p.addSurnom(surnomAajouter);
+				return lp;
+			}
 		}
-		return lp;
+		throw new NomNonAttribue();
 	}
 }

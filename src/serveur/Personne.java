@@ -16,6 +16,10 @@ public class Personne {
 		this.setSurnoms(s);
 	}
 
+	public void addSurnom(String nouveauSurnom) {
+		surnoms.add(nouveauSurnom);
+	}
+	
 	/**
 	 * @return the surnoms
 	 */
