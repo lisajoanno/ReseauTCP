@@ -10,7 +10,6 @@ public class Serveur extends ServerSocket {
 	
 	public Serveur(int port) throws IOException {
 		super(port);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**
