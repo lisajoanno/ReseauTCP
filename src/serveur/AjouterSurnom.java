@@ -1,5 +1,5 @@
 package serveur;
 
-public class AjouterSurnom {
+public class AjouterSurnom implements Requete {
 
 }

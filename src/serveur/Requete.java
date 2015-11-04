@@ -1,5 +1,5 @@
 package serveur;
 
-public class Requete {
+public interface Requete {
 
 }
