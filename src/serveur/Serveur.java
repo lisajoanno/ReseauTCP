@@ -9,6 +9,9 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import common.BaseDeDonnees;
+import common.Requete;
+
 public class Serveur extends ServerSocket {
 
 	private static BaseDeDonnees bd;
