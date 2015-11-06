@@ -1,8 +1,10 @@
 package serveur;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,19 +17,32 @@ public class Serveur extends ServerSocket {
 		super(port);
 		this.bd = new BaseDeDonnees();
 		
-		Socket client = new Socket();
+		System.out.println("Serveur de surnoms TCP, sur le port "+port+"...");
+
 		while(true) {
-			client = this.accept();
+			Socket client  = this.accept();
 			try {
-				DataInputStream is = new DataInputStream(client.getInputStream());
-				Requete requete = (Requete) is;
-				bd = requete.process(bd);
+				System.out.println("Nouveau client, à l'adresse " + client.getInetAddress() + " sur le port " + client.getPort() + ".");
+
+                // Open output stream
+                OutputStream output = client.getOutputStream();
+
+                System.out.println("New client, address " + client.getInetAddress() + " on " + client.getPort() + ".");
+
+                // Write the message and close the connection
+                output.write("oui oui".getBytes());
+                client.close();
 				
-				PrintStream output = new PrintStream(client.getOutputStream());
+				
+				Requete requete = (Requete) output;
+				bd = requete.process(bd);
+                
+//				PrintStream output = new PrintStream(client.getOutputStream());
 			} catch (Exception e) {
 				System.out.println(e);
 			};
 		}
+		
 	}
 	
 }

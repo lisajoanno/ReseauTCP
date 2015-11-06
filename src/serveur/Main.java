@@ -9,9 +9,7 @@ public class Main {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		System.out.println("TCP");
 		Serveur serveur = new Serveur(2222);
-
 	}
 
 }
