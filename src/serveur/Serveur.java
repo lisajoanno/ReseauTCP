@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
@@ -28,19 +30,19 @@ public class Serveur extends ServerSocket {
 				System.out.println("Nouveau client, à l'adresse " + client.getInetAddress() + " sur le port " + client.getPort() + ".");
 
                 // Open output stream
-                OutputStream output = client.getOutputStream();
+                ObjectOutputStream output = new ObjectOutputStream(client.getOutputStream());
+                ObjectInputStream input = new ObjectInputStream(client.getInputStream());
 
                 System.out.println("New client, address " + client.getInetAddress() + " on " + client.getPort() + ".");
 
                 // Write the message and close the connection
-                output.write("oui oui".getBytes());
-                client.close();
+                output.writeObject("xoxoxo");
 				
-				
-				Requete requete = (Requete) output;
+				Requete requete = (Requete) input.readObject();
 				bd = requete.process(bd);
                 
-//				PrintStream output = new PrintStream(client.getOutputStream());
+				PrintStream outputS = new PrintStream(client.getOutputStream());
+				outputS.println("hello");
 			} catch (Exception e) {
 				System.out.println(e);
 			};
