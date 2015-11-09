@@ -1,8 +1,10 @@
 package common;
 
+import java.io.Serializable;
 
 
-public class AjouterSurnom implements Requete {
+
+public class AjouterSurnom implements Requete, Serializable {
 	private String surnomAajouter;
 	private String nomDestination;
 

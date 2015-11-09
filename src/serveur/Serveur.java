@@ -10,44 +10,46 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
-import common.BaseDeDonnees;
-import common.Requete;
+import common.*;
+import common.AjouterSurnom;
+import exception.*;
 
-public class Serveur extends ServerSocket {
+public class Serveur  {
 
 	private static BaseDeDonnees bd;
 	
-	public Serveur(int port) throws IOException {
-		super(port);
-		this.bd = new BaseDeDonnees();
-		
-		System.out.println("Serveur de surnoms TCP, sur le port "+port+"...");
-
-		while(true) {
-			Socket client  = this.accept();
-			try {
-				System.out.println("Nouveau client, à l'adresse " + client.getInetAddress() + " sur le port " + client.getPort() + ".");
-
-                // Open output stream
-                ObjectOutputStream output = new ObjectOutputStream(client.getOutputStream());
-                ObjectInputStream input = new ObjectInputStream(client.getInputStream());
-
-                System.out.println("New client, address " + client.getInetAddress() + " on " + client.getPort() + ".");
-
-                // Write the message and close the connection
-                output.writeObject("xoxoxo");
-				
-				Requete requete = (Requete) input.readObject();
-				bd = requete.process(bd);
-                
-				PrintStream outputS = new PrintStream(client.getOutputStream());
-				outputS.println("hello");
-			} catch (Exception e) {
-				System.out.println(e);
-			};
-		}
-		
-	}
-	
+	public Serveur(int port) throws Exception {
+		 
+		        ServerSocket s = new ServerSocket(port);
+		        System.out.println("Socket serveur: " + s);
+		 
+		        Socket soc = s.accept();
+		 
+		        System.out.println("Serveur a accepte connexion: " + soc);
+		 
+		        ObjectOutputStream out = new ObjectOutputStream(soc.getOutputStream());
+		        out.flush();
+		 
+		        ObjectInputStream in = new ObjectInputStream(soc.getInputStream());
+		 
+		 
+		        System.out.println("Serveur a cree les flux");
+		 
+		        out.writeObject("Bienvenue");
+		        out.flush();
+		 
+		        System.out.println("Serveur: donnees emises");
+		        
+		        Requete objetRecu = (Requete) in.readObject();
+		        System.out.println(objetRecu);
+		        Requete r = objetRecu;
+		        out.writeObject(r.process(bd));
+		 
+		        in.close();
+		        out.close();
+		        soc.close();
+		    }
+			
 }

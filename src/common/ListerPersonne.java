@@ -1,8 +1,10 @@
 package common;
 
+import java.io.Serializable;
 
 
-public class ListerPersonne implements Requete {
+
+public class ListerPersonne implements Requete, Serializable {
 
 	@Override
 	public BaseDeDonnees process(BaseDeDonnees bd) {
