@@ -2,7 +2,7 @@ package common;
 
 import java.io.Serializable;
 
-public class ListerPersonne extends Requete implements Serializable {
+public class ListerPersonne implements Requete, Serializable {
 
 	/**
 	 * 
