@@ -1,8 +1,10 @@
-package common;
+package serveur;
 
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Personne {
+public class Personne implements Serializable {
 	private String nom;
 	private ArrayList<String> surnoms = new ArrayList<String>();;
 

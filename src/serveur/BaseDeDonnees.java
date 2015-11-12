@@ -1,15 +1,18 @@
-package common;
+package serveur;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-
-
 
 import exception.NomNonAttribue;
 import exception.SurnomDejaExistant;
 
-public class BaseDeDonnees {
+public class BaseDeDonnees implements Serializable {
 
-	public ArrayList<Personne> listePersonnes;
+	private ArrayList<Personne> listePersonnes = new ArrayList();
+
+	public void ajouterPersonne(Personne p) {
+		listePersonnes.add(p);
+	}
 
 	/**
 	 * @param surnomAajouter
@@ -44,6 +47,15 @@ public class BaseDeDonnees {
 	 */
 	public void setListePersonnes(ArrayList<Personne> listePersonnes) {
 		this.listePersonnes = listePersonnes;
+	}
+
+	public String toString() {
+		String myStr = "";
+		for (Personne personne : this.getListePersonnes()) {
+			myStr = ("Nom : " + personne.getNom() + " --- Pseudo : " + personne
+					.getSurnoms());
+		}
+		return myStr;
 	}
 
 }

@@ -1,6 +1,7 @@
-package common;
-
+package serveur;
 import java.io.Serializable;
+
+
 
 public class ListerPersonne implements Requete, Serializable {
 

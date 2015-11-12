@@ -4,38 +4,37 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
-import common.BaseDeDonnees;
-import common.ListerPersonne;
-import common.Requete;
+import exception.SurnomDejaExistant;
 
 public class Serveur extends ServerSocket {
 
-	private static BaseDeDonnees bd;
+	private static BaseDeDonnees bd = new BaseDeDonnees();
 
 	public Serveur(int port) throws Exception {
 
 		super(port);
 		System.out.println("Socket serveur: " + port);
 
+		Personne p = new Personne();
+		ArrayList<String> list = new ArrayList();
+		list.add("JP");
+		p.setNom("Jean-Paul");
+		p.setSurnoms(list);
+		p.addSurnom("Popol");
+		bd.ajouterPersonne(p);
 		Socket soc = this.accept();
 
 		System.out.println("Serveur a accepte connexion: " + soc);
 
 		ObjectOutputStream out = new ObjectOutputStream(soc.getOutputStream());
-		out.flush();
 
 		ObjectInputStream in = new ObjectInputStream(soc.getInputStream());
 
-		System.out.println("Serveur a cree les flux");
-
 		out.writeObject("Bienvenue");
-		out.flush();
-
-		System.out.println("Serveur: donnees emises");
 
 		Object objetRecu = in.readObject();
-		System.out.println(objetRecu);
 		Requete r = (Requete) objetRecu;
 		out.writeObject(r.process(bd));
 
