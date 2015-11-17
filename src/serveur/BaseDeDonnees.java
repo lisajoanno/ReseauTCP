@@ -8,7 +8,12 @@ import exception.SurnomDejaExistant;
 
 public class BaseDeDonnees implements Serializable {
 
-	private ArrayList<Personne> listePersonnes = new ArrayList();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6153943030340429L;
+
+	private ArrayList<Personne> listePersonnes = new ArrayList<Personne>();
 
 	public void ajouterPersonne(Personne p) {
 		listePersonnes.add(p);

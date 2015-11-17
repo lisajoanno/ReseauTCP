@@ -1,46 +1,41 @@
 package serveur;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
-
-import exception.SurnomDejaExistant;
 
 public class Serveur extends ServerSocket {
 
-	private static BaseDeDonnees bd = new BaseDeDonnees();
+	static BaseDeDonnees bd = new BaseDeDonnees();
+
+	private boolean ok = true;
+	ServerSocket ss;
 
 	public Serveur(int port) throws Exception {
 
-		super(port);
 		System.out.println("Socket serveur: " + port);
 
 		Personne p = new Personne();
-		ArrayList<String> list = new ArrayList();
+		ArrayList<String> list = new ArrayList<String>();
 		list.add("JP");
 		p.setNom("Jean-Paul");
 		p.setSurnoms(list);
 		p.addSurnom("Popol");
 		bd.ajouterPersonne(p);
-		Socket soc = this.accept();
 
-		System.out.println("Serveur a accepte connexion: " + soc);
+		try {
+			ss = new ServerSocket(2222);
+		} catch (IOException e) {
+			System.out.println("Erreur !");
+			e.printStackTrace();
+		}
 
-		ObjectOutputStream out = new ObjectOutputStream(soc.getOutputStream());
+		// on ne peut pas mettre while(true) sinon ss.close() est inatteignable
+		while (ok) {
+			new ConnexionThread(ss.accept()).start();
+		}
 
-		ObjectInputStream in = new ObjectInputStream(soc.getInputStream());
-
-		out.writeObject("Bienvenue");
-
-		Object objetRecu = in.readObject();
-		Requete r = (Requete) objetRecu;
-		out.writeObject(r.process(bd));
-
-		in.close();
-		out.close();
-		soc.close();
+		ss.close();
 	}
 
 }

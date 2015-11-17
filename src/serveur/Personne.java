@@ -1,11 +1,16 @@
 package serveur;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Personne implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1208899971439424986L;
+
 	private String nom;
+
 	private ArrayList<String> surnoms = new ArrayList<String>();;
 
 	public Personne() {
