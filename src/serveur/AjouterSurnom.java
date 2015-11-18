@@ -11,7 +11,7 @@ public class AjouterSurnom implements Requete, Serializable {
 	private String surnomAajouter;
 	private String nomDestination;
 
-	public BaseDeDonnees process(BaseDeDonnees bd) throws Exception {
-		return bd.ajouterSurnom(surnomAajouter, nomDestination);
+	public String process(BaseDeDonnees bd) throws Exception {
+		return bd.ajouterSurnom(surnomAajouter, nomDestination).toString();
 	}
 }

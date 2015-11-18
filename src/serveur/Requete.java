@@ -3,5 +3,5 @@ package serveur;
 
 public interface Requete {
 
-	public BaseDeDonnees process(BaseDeDonnees l1) throws Exception;
+	public String process(BaseDeDonnees l1) throws Exception;
 }
