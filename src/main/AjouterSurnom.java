@@ -38,6 +38,10 @@ public class AjouterSurnom implements Requete, Serializable {
 	 */
 	public String process(BaseDeDonnees bd) throws Exception {
 		try {
+			for (Personne p : bd.getListePersonnes()) {
+				if(p.getSurnoms().contains(surnomAajouter)) 
+					throw new SurnomDejaExistant();
+			}
 			return bd.ajouterSurnom(surnomAajouter, nomDestination).toString();
 		} catch (NomNonAttribue e) {
 			return e.getMessage();

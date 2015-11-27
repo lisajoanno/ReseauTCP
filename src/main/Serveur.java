@@ -29,13 +29,12 @@ public class Serveur extends ServerSocket {
 		Personne p2 = new Personne();
 		ArrayList<String> list = new ArrayList<String>();
 		ArrayList<String> list2 = new ArrayList<String>();
-		list2.add("superlisa");
-		p2.setNom("Lisa");
-		p2.setSurnoms(list2);
-		list.add("Nono");
-		p.setNom("Arnaud");
+		list.add("superlisa");
+		p.setNom("Lisa");
 		p.setSurnoms(list);
-		p.addSurnom("rykii");
+		list2.add("Nono");
+		p2.setNom("Arnaud");
+		p2.setSurnoms(list2);
 		bd.ajouterPersonne(p);
 		bd.ajouterPersonne(p2);
 
