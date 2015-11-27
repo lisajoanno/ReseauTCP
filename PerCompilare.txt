@@ -1,0 +1,11 @@
+Quando sei nel record che contiene questo file :
+
+=== La procedura per compilare il cliente :
+
+$ javac -d bin src/exception/*.java src/main/*.java
+
+=== E per eseguire :
+
+Nel bin/ : (/!\ Non è possibile a fare del bin/)
+
+$ java main.Main
