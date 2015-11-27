@@ -1,0 +1,95 @@
+Arnaud GARNIER
+Lisa JOANNO    
+
+Version 27/11/15
+
+------------------------ Serveur de surnoms -------------------
+
+---------------- Contraintes :
+
+- Garantir que deux personnes différentes n'aient pas le même surnom.
+- Une personne peut avoir plusieurs surnoms (mais pas de doublons).
+
+---------------- Services/Requêtes : 
+
+Stocker les surnoms associés à un nom.
+Ajouter un nom. 
+Ajouter un surnom à un nom.
+Modifier un surnom.
+Supprimer un surnom.
+Lister les noms et surnoms des personnes.
+Rechercher les surnoms pour un nom donné.
+Rechercher le nom d'une personne pour un surnom donné.
+
+--------------- Protocole d'application : serveur de nom (communication TCP)
+
+Le serveur se trouvera sur le port 2222. 
+La sérialisation qui sera mise en œuvre pour l'échange de données est la sérialisation objet. 
+Les classes ObjectInputStream et ObjectOutputStream permettront l'envoi et la réception d'objets entre clients et serveur.
+
+Une classe Personne permettra de représenter une personne avec un nom et une liste de surnoms.
+Une base de données (classe BaseDeDonnees) contient la liste de Personne.
+Le serveur contient une BaseDeDonnees statique contenant toutes les Personne (celles à l'initialisation et celles ajoutées par le client).
+Le client échangera avec le serveur un objet de type Requête. 
+Requête sera une interface qui implémentera une unique méthode process(BaseDeDonnees).
+Les classes AjouterNom, AjouterSurnom, ModifierSurnom, SupprimerSurnom, RechercherSurnom,  RechercherNom, ListerPersonne implémenteront l'interface Requête et implémenteront leur service dans la méthode process. 
+
+Ces classes contiendront :
+
+1) Classe AjouterNom implements Requete:	
+	- une variable d'instance : un String nomAajouter
+	- La méthode process(BaseDeDonnees) qui lèvera une exception si le nom donné est déjà contenu dans la liste de personnes, sinon créera une nouvelle personne avec le nom donné et l'ajoutera à la liste de personnes. 
+
+2) Classe AjouterSurnom implements Requete:
+	- 2 variables d'instances : un String nomDestination et un String surnomAajouter.
+	- La méthode process(BaseDeDonnees) cette fonction lèvera une exception si le surnom existe déjà dans la liste de surnoms et lèvera une autre exception si le nom donné n'est attribué à aucune personne. Sinon, on ajoutera le surnom à la personne qui a pour nom nomDestination. 
+	
+3) Classe ModifierSurnom implements Requete:
+	- 2 variables d'instances : un String surnomAmodifier et un String nouveauSurnom
+	- La méthode process(BaseDeDonnees) qui lèvera une exception si le surnom donné n'existe pas et si le nouveau surnom existe déjà dans la liste de surnoms. Sinon elle modifiera l'ancien surnom par le nouveau surnom. 
+
+4) Classe SupprimerSurnom implements Requete:
+	- une variable d'instance : un String surnomASupprimer
+	- La méthode process(BaseDeDonnees) qui lèvera une exception si le surnom donné n'existe pas dans les listes de surnoms. Sinon elle supprimera le surnom.
+
+5) Classe RechercherSurnom implements Requete:
+	- une variable d'instance : un String nomRecherche
+	- La méthode process(BaseDeDonnees) qui lèvera une exception si le nom donné n'existe pas dans la liste de personne. Sinon elle listera tous les surnoms qui correspondes au nom donné.
+
+5) Classe RechercherNom implements Requete:
+	- une variable d'instance : un String surnomRecherche
+	- La méthode process(BaseDeDonnees) qui lèvera une exception si le surnom donné n'existe pas dans les listes de surnoms. Sinon elle listera le nom qui correspond au surnom donné.
+
+7) Classe ListerPersonne implements Requete:
+	- La méthode process(BaseDeDonnees) qui affichera la liste de Personne.
+
+Nous n'implémenteront que les classes AjouterSurnom et ListerPersonne.
+
+------------------ Envoi d'une requête
+
+Côté client :
+
+- création de la socket client avec l'adresse et le port du serveur
+- création d'un objet ObjectOutputStream (out) et ObjectInputStream (in)
+- Affichage du message de bienvenue du serveur avec un in.readObject()
+- scan du choix de l'utilisateur du client
+- création de la requête avec un Requete r = new AjouterNom(«Pierre») (par exemple)
+- affectation de la requête à la sortie de la socket client avec out.writeObject(r)
+- lecture de la réponse du serveur avec Object re = in.readObject();
+- affichage de la réponse du serveur avec System.out.println(re);
+- pour se déconnecter du serveur le client doit envoyer une Requete NULL.
+
+Côté serveur :
+
+- création de la socket serveur 
+- serveur en attente d'une connexion
+- à la connexion, création d'une thread 
+- dans la thread : 
+	- création d'un objet ObjectOutputStream (out) et ObjectInputStream (in)
+	- envoi d'un message de bienvenue
+	- lecture de l'envoi du client avec Object objetRecu = in.readObject()
+	- process de la requête
+	- écriture sur la sortie du servuer avec out.writeObject(r.process(Serveur.bd));
+	- à la réception d'une requête NULL, le client s'est déconnecté, donc il faut fermer la thread.
+
+
