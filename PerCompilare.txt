@@ -6,6 +6,6 @@ $ javac -d bin src/exception/*.java src/main/*.java
 
 === E per eseguire :
 
-Nel bin/ : (/!\ Non è possibile a fare del bin/)
+Nel bin/ : (/!\ Non è possibile a fare nel bin/)
 
 $ java main.Main
