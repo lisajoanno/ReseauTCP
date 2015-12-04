@@ -6,7 +6,7 @@ import java.net.Socket;
 
 /**
  * La thread de connexion permettant de faire se connecter plusieurs clients au
- * serveur
+ * serveur.
  * 
  */
 public class ConnexionThread extends Thread {
@@ -20,7 +20,9 @@ public class ConnexionThread extends Thread {
 	}
 
 	/**
-	 * 
+	 * Fonctionnement du serveur sur une thread spécifique par client. 
+	 * Crée des objets de connexion pour le client qui vient de se connecter.
+	 * Recoit les requetes du client, effectue le process, et renvoie au client la réponse.
 	 */
 	public void run() {
 		try {

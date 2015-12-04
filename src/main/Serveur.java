@@ -5,7 +5,9 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 
 /**
- * La classe serveur pour créer le serveur.
+ * La classe serveur pour créer le serveur. 
+ * Initialise la base de données et lance une connexionThread à 
+ * chaque connexion d'un nouveau client.
  * 
  */
 public class Serveur extends ServerSocket {
@@ -16,15 +18,15 @@ public class Serveur extends ServerSocket {
 	ServerSocket ss;
 
 	/**
-	 * Le constructeur
+	 * Constructeur du serveur. 
+	 * Initialisation de la base de données et acceptation des clients.
 	 * 
 	 * @param port
 	 * @throws Exception
 	 */
 	public Serveur(int port) throws Exception {
-
-		System.out.println("Socket serveur: " + port);
-
+		System.out.println("Lancement du serveur sur le port " + port + "...");
+		// Initialisation de la base de données
 		Personne p = new Personne();
 		Personne p2 = new Personne();
 		ArrayList<String> list = new ArrayList<String>();
@@ -38,6 +40,7 @@ public class Serveur extends ServerSocket {
 		bd.ajouterPersonne(p);
 		bd.ajouterPersonne(p2);
 
+		// Création de la socket du serveur.
 		try {
 			ss = new ServerSocket(2222);
 		} catch (IOException e) {
@@ -45,7 +48,7 @@ public class Serveur extends ServerSocket {
 			e.printStackTrace();
 		}
 
-		// on ne peut pas mettre while(true) sinon ss.close() est inatteignable
+		// Création d'une connexion thread à chaque connexion d'un client.
 		while (ok) {
 			new ConnexionThread(ss.accept()).start();
 		}
